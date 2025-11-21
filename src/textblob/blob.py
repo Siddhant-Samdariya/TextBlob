@@ -394,17 +394,19 @@ class BaseBlob(StringlikeMixin, BlobComparableMixin):
         """
         return WordList(word_tokenize(self.raw, include_punc=False))
         
-     def translate(self, to='en', source='auto'):
+    def translate(self, to='en', source='auto'):
         """
-        Translate the text using the googletrans backend.
+        Translate this text using the deep_translator backend.
 
         :param to: Target language code (e.g. 'en', 'hi', 'es').
-        :param source: Source language code. Defaults to 'auto' for auto-detection.
+        :param source: Source language code (default 'auto').
         :return: A new Blob object containing the translated text.
         """
         from .translation import Translator
         translator = Translator()
-        return self.__class__(translator.translate(str(self), source, to))
+        translated_text = translator.translate(str(self), src=source, dest=to)
+        return self.__class__(translated_text)
+
 
 
     @cached_property
