@@ -1,12 +1,12 @@
-from googletrans import Translator as GoogleTranslator
+from deep_translator import GoogleTranslator
 
 class Translator:
-    def __init__(self):
-        self.translator = GoogleTranslator()
+    """
+    Translation backend using deep_translator.
+    """
 
     def translate(self, text, src='auto', dest='en'):
         try:
-            result = self.translator.translate(text, src=src, dest=dest)
-            return result.text
+            return GoogleTranslator(source=src, target=dest).translate(text)
         except Exception as e:
             raise RuntimeError(f"Translation failed: {e}")
